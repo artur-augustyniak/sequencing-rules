@@ -1,4 +1,4 @@
-package pl.aaugustyniak.myawsomeapp;
+package pl.aaugustyniak.sequencing;
 
 import com.google.code.tempusfugit.concurrency.ConcurrentRule;
 import com.google.code.tempusfugit.concurrency.ConcurrentTestRunner;
@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
  * @author aaugustyniak
  */
 @RunWith(ConcurrentTestRunner.class)
-public class MyAppTest {
+public class SequencingRulesTest {
 
     private static final int CYCLES = 100;
     private static final int THREADS = 5;
@@ -38,11 +38,11 @@ public class MyAppTest {
     private static CountDownLatch cdl;
     private static AtomicInteger progressionSum;
 
-    private static MyApp app;
+    private static SequencingRules app;
 
     @BeforeClass
     public static void beforeClass() {
-        app = new MyApp();
+        app = new SequencingRules();
         cdl = new CountDownLatch(CYCLES * THREADS);
         progressionSum = new AtomicInteger();
     }

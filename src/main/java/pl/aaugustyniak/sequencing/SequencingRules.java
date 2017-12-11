@@ -1,15 +1,16 @@
-package pl.aaugustyniak.myawsomeapp;
+package pl.aaugustyniak.sequencing;
 
 import com.google.code.tempusfugit.concurrency.annotations.GuardedBy;
 import com.google.code.tempusfugit.concurrency.annotations.ThreadSafe;
 import com.google.common.base.Optional;
+import pl.aaugustyniak.sequencing.rule.LPTRule;
 
 
 /**
  * @author aaugustyniak
  */
 @ThreadSafe
-public class MyApp {
+public class SequencingRules {
 
 
     @GuardedBy(lock = GuardedBy.Type.THIS)
@@ -28,9 +29,12 @@ public class MyApp {
     public static void main(String[] args) {
 
 
-        MyApp app = new MyApp();
+        SequencingRules app = new SequencingRules();
         for (int i = 0; i < 10; i++) {
             System.out.println(app.getNext());
         }
+        LPTRule lptr = new LPTRule();
+        lptr.exec();
+
     }
 }
