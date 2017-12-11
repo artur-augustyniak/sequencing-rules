@@ -4,6 +4,7 @@ import com.google.code.tempusfugit.concurrency.annotations.GuardedBy;
 import com.google.code.tempusfugit.concurrency.annotations.ThreadSafe;
 import com.google.common.base.Optional;
 import pl.aaugustyniak.sequencing.rule.LPTRule;
+import pl.aaugustyniak.sequencing.rule.SPTRule;
 
 
 /**
@@ -35,6 +36,10 @@ public class SequencingRules {
         }
         LPTRule lptr = new LPTRule();
         lptr.exec();
+
+        SPTRule sptr = new SPTRule();
+        sptr.exec();
+
 
     }
 }

@@ -1,17 +1,21 @@
 package pl.aaugustyniak.sequencing.rule;
 
+import pl.aaugustyniak.sequencing.alg.BaseSorter;
 import pl.aaugustyniak.sequencing.alg.PrioArrayHeapQueue;
 import pl.aaugustyniak.sequencing.alg.PrioSimpleQueue;
+import pl.aaugustyniak.sequencing.alg.QuickSorter;
 import pl.aaugustyniak.sequencing.model.Job;
 import pl.aaugustyniak.sequencing.model.Worker;
 
+import java.util.Iterator;
 import java.util.Random;
 
 
-public class LPTRule {
+public class SPTRule {
 
 
     public void exec() {
+
         Random r = new Random(42);
 
         int numberOfMachines = 10;
@@ -30,23 +34,34 @@ public class LPTRule {
             System.out.println(jobs[i]);
         }
 
+
         for (int i = 0; i < numberOfMachines; i++) {
             workers.enqueue(new Worker());
         }
 
-        for (int j = numberOfJobs - 1; j >= 0; j--) {
+        BaseSorter<Job> sorter = new QuickSorter<>();
+        jobs = sorter.sort(jobs);
+        int j = numberOfJobs - 1;
+        for (Iterator it = workers.iterator(); it.hasNext(); ) {
+            Worker w = (Worker) it.next();
+            w.addJob(jobs[j--]);
+        }
+
+        for (int k = 0; k <= j; k++) {
             Worker leastBusy = workers.dequeueMin();
-            leastBusy.addJob(jobs[j]);
+            leastBusy.addJob(jobs[k]);
             workers.enqueue(leastBusy);
         }
 
-        System.out.println("Workers in least busy order LPT:");
+
+        System.out.println("Workers in least busy order SPT:");
         System.out.println("----------------------------");
         while (!workers.isEmpty()) {
             System.out.println(workers.dequeueMin());
             System.out.println("----------------------------");
         }
-    }
 
+
+    }
 
 }
